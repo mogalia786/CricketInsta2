@@ -58,6 +58,9 @@
                                 <state key="normal" title="Sign In">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="emailSignInTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zNA-jE-PUU"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHw-nj-p4P">
                                 <subviews>
@@ -95,7 +98,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="623-eu-6hG" firstAttribute="top" secondItem="eU0-AE-LSn" secondAttribute="bottom" constant="70" id="06G-N5-sVC"/>
+                            <constraint firstItem="623-eu-6hG" firstAttribute="top" secondItem="eU0-AE-LSn" secondAttribute="bottom" constant="50" id="06G-N5-sVC"/>
                             <constraint firstItem="cF4-sh-qDU" firstAttribute="top" secondItem="jNi-A6-DU8" secondAttribute="bottom" constant="15" id="18q-IM-lOq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cF4-sh-qDU" secondAttribute="trailing" id="23h-YS-xIq"/>
                             <constraint firstItem="eU0-AE-LSn" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="6UP-fG-zmw"/>
@@ -107,8 +110,8 @@
                             <constraint firstItem="jNi-A6-DU8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wwt-6z-Gcu"/>
                             <constraint firstItem="zHw-nj-p4P" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Xbd-SY-Rij"/>
                             <constraint firstItem="1PV-Db-vNi" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="YQo-kP-keN"/>
-                            <constraint firstItem="1PV-Db-vNi" firstAttribute="top" secondItem="eU0-AE-LSn" secondAttribute="bottom" constant="25" id="j7m-9e-MVf"/>
-                            <constraint firstItem="eU0-AE-LSn" firstAttribute="top" secondItem="jNi-A6-DU8" secondAttribute="bottom" constant="70" id="jQe-Q9-Lcx"/>
+                            <constraint firstItem="1PV-Db-vNi" firstAttribute="top" secondItem="eU0-AE-LSn" secondAttribute="bottom" constant="15" id="j7m-9e-MVf"/>
+                            <constraint firstItem="eU0-AE-LSn" firstAttribute="top" secondItem="jNi-A6-DU8" secondAttribute="bottom" constant="40" id="jQe-Q9-Lcx"/>
                             <constraint firstAttribute="trailing" secondItem="jNi-A6-DU8" secondAttribute="trailing" id="lzM-gM-3gc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JA8-Dm-5dt" secondAttribute="trailing" constant="20" id="n5X-Lz-FXp"/>
                             <constraint firstAttribute="trailing" secondItem="zHw-nj-p4P" secondAttribute="trailing" id="rQa-gU-EaX"/>
@@ -117,6 +120,10 @@
                             <constraint firstItem="cF4-sh-qDU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="xaq-Cm-wGx"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailField" destination="SUB-Z8-3rR" id="eC2-u8-Ie5"/>
+                        <outlet property="pwdField" destination="bez-gq-AIo" id="3tE-CL-DQu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

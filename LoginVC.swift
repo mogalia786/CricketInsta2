@@ -12,6 +12,9 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 class LoginVC: UIViewController {
 
+    @IBOutlet weak var emailField: UITextField!
+    
+    @IBOutlet weak var pwdField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -51,6 +54,57 @@ class LoginVC: UIViewController {
         
         
     }
+    
+    
+    @IBAction func emailSignInTapped(_ sender: AnyObject) {
+        
+        if let email=emailField.text, let pwd=pwdField.text{
+            FIRAuth.auth()?.signIn(withEmail: email, password: pwd, completion: { (user, error) in
+                if error == nil{
+                    print("FAIZEL: Email User authenticated with Firebasw")
+                
+                }else{
+                    FIRAuth.auth()?.createUser(withEmail: email, password: pwd, completion: { (user, error) in
+                        if error != nil{
+                            print("FAIZEL: Email User failed to authenticate with Firebase - \(error)")
+                        }else{
+                            print("FAIZEL: Email User successfully created and athenticated with Firebase")
+                            
+                        }
+                    })
+                }
+            })
+        }
+    }
+    
+    
+    
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
