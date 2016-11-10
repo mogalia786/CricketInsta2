@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FBSDKLoginKit
 import FBSDKCoreKit
+import SwiftKeychainWrapper
+
 class LoginVC: UIViewController {
 
     @IBOutlet weak var emailField: UITextField!
@@ -17,7 +19,14 @@ class LoginVC: UIViewController {
     @IBOutlet weak var pwdField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+    
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        if let _=KeychainWrapper.standard.string(forKey: KEY_UID){
+            
+            performSegue(withIdentifier: "ShowPostVC", sender: nil)
+        }
     }
 
    
@@ -35,6 +44,9 @@ class LoginVC: UIViewController {
                 let credential=FIRFacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
                 self.firebaseAuth(credential: credential)
             print("FAIZEL: Facebook Login successful!")
+                let alert = UIAlertController(title: "Sign in Successfull for user", message: "Message", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
         
@@ -46,7 +58,9 @@ class LoginVC: UIViewController {
                 
                 print("FAIZEL: Firebase authenticate unsuccessful - \(error)")
             }else{
-                
+                if let user=user{
+                    self.completeSignIn(id: user.uid)
+                                    }
                 print("FAIZEL: Firebase authenticate successfully!")
             }
         })
@@ -61,13 +75,18 @@ class LoginVC: UIViewController {
         if let email=emailField.text, let pwd=pwdField.text{
             FIRAuth.auth()?.signIn(withEmail: email, password: pwd, completion: { (user, error) in
                 if error == nil{
-                    print("FAIZEL: Email User authenticated with Firebasw")
+                    self.completeSignIn(id: (user?.uid)!)
+                    print("FAIZEL: Email User authenticated with Firebase")
                 
                 }else{
                     FIRAuth.auth()?.createUser(withEmail: email, password: pwd, completion: { (user, error) in
                         if error != nil{
-                            print("FAIZEL: Email User failed to authenticate with Firebase - \(error)")
+                            print("FAIZEL: Email User failed to authenticate with Firebase - \(error) for user: \(user?.email)")
+                            let alert = UIAlertController(title: "Sign in Failed", message: "Failed to Authenticate! \(error?.localizedDescription) for user \(email)", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
                         }else{
+                            self.completeSignIn(id: (user?.uid)!)
                             print("FAIZEL: Email User successfully created and athenticated with Firebase")
                             
                         }
@@ -77,7 +96,12 @@ class LoginVC: UIViewController {
         }
     }
     
-    
+    func completeSignIn(id: String){
+        
+        KeychainWrapper.standard.set(id, forKey: KEY_UID)
+        performSegue(withIdentifier: "ShowPostVC", sender: nil)
+ 
+    }
     
     
     

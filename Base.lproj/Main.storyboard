@@ -123,11 +123,54 @@
                     <connections>
                         <outlet property="emailField" destination="SUB-Z8-3rR" id="eC2-u8-Ie5"/>
                         <outlet property="pwdField" destination="bez-gq-AIo" id="3tE-CL-DQu"/>
+                        <segue destination="IWC-U2-afs" kind="show" identifier="ShowPostVC" id="Dki-jQ-Yw1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="116" y="122.78860569715144"/>
+        </scene>
+        <!--PostVC-->
+        <scene sceneID="8Sb-QK-eGr">
+            <objects>
+                <viewController id="IWC-U2-afs" customClass="postVC" customModule="CricketInsta" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rmb-Bc-Vab"/>
+                        <viewControllerLayoutGuide type="bottom" id="HtU-hS-tlB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Q5a-ne-VFK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1sL-xu-qgT">
+                                <color key="backgroundColor" red="0.17254901959999999" green="0.58431372550000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="iYQ-2q-PLM"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piV-cw-60r">
+                                <state key="normal" title="SignOut"/>
+                                <connections>
+                                    <action selector="signOutBtn:" destination="IWC-U2-afs" eventType="touchUpInside" id="dCm-2p-TsT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="piV-cw-60r" firstAttribute="centerY" secondItem="Q5a-ne-VFK" secondAttribute="centerY" id="G8B-m2-O6L"/>
+                            <constraint firstItem="1sL-xu-qgT" firstAttribute="top" secondItem="Q5a-ne-VFK" secondAttribute="top" id="L5K-n9-gUd"/>
+                            <constraint firstAttribute="trailing" secondItem="1sL-xu-qgT" secondAttribute="trailing" id="Mng-ed-Oat"/>
+                            <constraint firstItem="piV-cw-60r" firstAttribute="centerX" secondItem="Q5a-ne-VFK" secondAttribute="centerX" id="h4l-jv-NxH"/>
+                            <constraint firstItem="1sL-xu-qgT" firstAttribute="leading" secondItem="Q5a-ne-VFK" secondAttribute="leading" id="vhP-PE-8wR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="signOUT" id="CDe-d7-jpW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YTg-iy-He9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="816.79999999999995" y="122.78860569715144"/>
         </scene>
     </scenes>
     <resources>
