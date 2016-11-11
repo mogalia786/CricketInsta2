@@ -17,7 +17,12 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         tableView.delegate=self
         tableView.dataSource=self
-        // Do any additional setup after loading the view.
+        
+        //This line is the OBSERVER that listens to Firebase for any changes and returns a snapshot
+        DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+            print(snapshot.value)
+        })
+        
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -29,6 +34,8 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
     }
+    
+    
     @IBAction func signOutBtn(_ sender: AnyObject) {
         let _=KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         try! FIRAuth.auth()?.signOut()
