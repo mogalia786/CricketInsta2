@@ -59,7 +59,8 @@ class LoginVC: UIViewController {
                 print("FAIZEL: Firebase authenticate unsuccessful - \(error)")
             }else{
                 if let user=user{
-                    self.completeSignIn(id: user.uid)
+                    let userData=["Provider":credential.provider]
+                    self.completeSignIn(id: user.uid, userData: userData)
                                     }
                 print("FAIZEL: Firebase authenticate successfully!")
             }
@@ -75,7 +76,8 @@ class LoginVC: UIViewController {
         if let email=emailField.text, let pwd=pwdField.text{
             FIRAuth.auth()?.signIn(withEmail: email, password: pwd, completion: { (user, error) in
                 if error == nil{
-                    self.completeSignIn(id: (user?.uid)!)
+                    let userData=["provider":user?.providerID]
+                    self.completeSignIn(id: (user?.uid)!,userData: (userData as! Dictionary<String, String>))
                     print("FAIZEL: Email User authenticated with Firebase")
                 
                 }else{
@@ -86,7 +88,8 @@ class LoginVC: UIViewController {
                             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                             self.present(alert, animated: true, completion: nil)
                         }else{
-                            self.completeSignIn(id: (user?.uid)!)
+                            let userData=["provider":user?.providerID]
+                            self.completeSignIn(id: (user?.uid)!,userData: userData as! Dictionary<String, String>)
                             print("FAIZEL: Email User successfully created and athenticated with Firebase")
                             
                         }
@@ -96,8 +99,8 @@ class LoginVC: UIViewController {
         }
     }
     
-    func completeSignIn(id: String){
-        
+    func completeSignIn(id: String, userData:Dictionary<String,String>){
+        DataService.ds.createFIRDBuser(uid: id, userData: userData)
         KeychainWrapper.standard.set(id, forKey: KEY_UID)
         performSegue(withIdentifier: "ShowPostVC", sender: nil)
  

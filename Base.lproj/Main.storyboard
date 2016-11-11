@@ -157,6 +157,7 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.17254901959999999" green="0.58431372550000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="21C-hc-5T9" firstAttribute="centerY" secondItem="NnI-E3-4e6" secondAttribute="centerY" id="5ty-Db-OEh"/>
                                     <constraint firstItem="NnI-E3-4e6" firstAttribute="leading" secondItem="1sL-xu-qgT" secondAttribute="leading" constant="16" id="fNP-zm-HlJ"/>
@@ -164,6 +165,9 @@
                                     <constraint firstAttribute="height" constant="65" id="iYQ-2q-PLM"/>
                                     <constraint firstItem="21C-hc-5T9" firstAttribute="centerX" secondItem="1sL-xu-qgT" secondAttribute="centerX" id="l8b-qA-PSg"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bdI-dF-tlR" appends="YES" id="YW9-7i-ZvN"/>
+                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTp-Az-aUb" customClass="FancyView" customModule="CricketInsta" customModuleProvider="target">
                                 <subviews>
@@ -201,14 +205,14 @@
                                     <constraint firstItem="98B-Up-VWP" firstAttribute="leading" secondItem="vTp-Az-aUb" secondAttribute="leading" constant="8" id="zUf-H9-0gM"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="380" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7GP-AB-JN2">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="380" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7GP-AB-JN2">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="380" id="bR9-gc-beM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="380" id="bR9-gc-beM" customClass="PostCell" customModule="CricketInsta" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="380"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bR9-gc-beM" id="SKa-Lo-3HP">
-                                            <frame key="frameInset" width="375" height="379"/>
+                                            <frame key="frameInset" width="375" height="380"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pP4-Ah-HtO" customClass="FancyView" customModule="CricketInsta" customModuleProvider="target">
@@ -239,6 +243,9 @@
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="lAP-0o-Kyk"/>
                                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qpi-eL-u2m">
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="yaX-oT-jK7"/>
+                                                                    </constraints>
                                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -279,6 +286,13 @@
                                                 <constraint firstAttribute="trailing" secondItem="pP4-Ah-HtO" secondAttribute="trailing" constant="16" id="ptW-hk-GM5"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="PostImg" destination="lAP-0o-Kyk" id="bpM-Ny-phN"/>
+                                            <outlet property="caption" destination="qpi-eL-u2m" id="aZW-5h-9Le"/>
+                                            <outlet property="likesLabel" destination="Nyx-TB-Kmn" id="fGX-Vx-Y1j"/>
+                                            <outlet property="pfIMG" destination="Nzh-T6-x0D" id="piI-RU-85l"/>
+                                            <outlet property="username" destination="mst-0Z-LHr" id="YE7-fg-G5a"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -303,6 +317,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTg-iy-He9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="bdI-dF-tlR">
+                    <connections>
+                        <action selector="signOutBtn:" destination="IWC-U2-afs" id="XuL-y3-qRQ"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="816.79999999999995" y="122.78860569715144"/>
         </scene>

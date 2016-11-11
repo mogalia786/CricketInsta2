@@ -10,19 +10,13 @@ import UIKit
 
 class CircleView: UIImageView {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        layer.shadowColor=UIColor.black.cgColor
-        layer.shadowOffset=CGSize(width: 1.0, height: 1.0)
-        layer.shadowRadius=0.5
-        
-    }
+  
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override func layoutSubviews() {
+     
         layer.cornerRadius=self.frame.height/2
+        clipsToBounds=true
 
-        
     }
 
 }
