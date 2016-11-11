@@ -10,9 +10,12 @@ import UIKit
 import SwiftKeychainWrapper
 import Firebase
 
+
+
 class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+     var Posts=[Post]()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate=self
@@ -20,7 +23,17 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         //This line is the OBSERVER that listens to Firebase for any changes and returns a snapshot
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
-            print(snapshot.value)
+            if let snapshot=snapshot.children.allObjects as? [FIRDataSnapshot]{
+                for snap in snapshot{
+                    //snap.value is a dictionary of post object in Firebase. now we create a dictionary object to pass to the post class to initialise and set values
+                    if let postDict=snap.value as? Dictionary<String, AnyObject>{
+                        let key=snap.key
+                        let post=Post(postKey: key, userData: postDict)
+                        self.Posts.append(post)
+                    }
+                }
+            }
+            self.tableView.reloadData()
         })
         
     }
@@ -29,7 +42,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return 10
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return Posts.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
