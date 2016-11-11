@@ -16,7 +16,7 @@ class PostCell: UITableViewCell {
     @IBOutlet weak var PostImg: UIImageView!
     @IBOutlet weak var pfIMG: CircleView!
     
-    
+    var post:Post!
     
     override func awakeFromNib() {
         
@@ -24,6 +24,12 @@ class PostCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
+    func configureCell(post:Post){
+       self.post=post
+        self.caption.text=post.caption
+        self.likesLabel.text="\(post.likes)"
+        
+    }
   
 }

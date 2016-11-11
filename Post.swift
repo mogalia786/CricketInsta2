@@ -41,6 +41,7 @@ class Post{
     
     
     init(postKey:String, userData:Dictionary<String, AnyObject>){
+        self._postKey=postKey
         if let caption=userData["Caption"] as? String{
             self._caption=caption
         }

@@ -144,7 +144,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1sL-xu-qgT" customClass="FancyView" customModule="CricketInsta" customModuleProvider="target">
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sign-out" translatesAutoresizingMaskIntoConstraints="NO" id="NnI-E3-4e6">
+                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sign-out" translatesAutoresizingMaskIntoConstraints="NO" id="NnI-E3-4e6">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="45" id="kXp-cs-4iY"/>
                                             <constraint firstAttribute="height" constant="38" id="o5x-bf-ITB"/>
@@ -173,12 +173,16 @@
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="98B-Up-VWP">
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="nbw-iT-fwo" customClass="CircleView" customModule="CricketInsta" customModuleProvider="target">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-image" translatesAutoresizingMaskIntoConstraints="NO" id="nbw-iT-fwo" customClass="CircleView" customModule="CricketInsta" customModuleProvider="target">
                                                 <color key="backgroundColor" red="0.36078431370000003" green="0.41960784309999999" blue="0.75294117650000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="49" id="78g-Qn-zwy"/>
                                                     <constraint firstAttribute="width" constant="49" id="Ovf-Lm-CMD"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="BsW-uR-iSJ" appends="YES" id="Kz9-kn-0j4"/>
+                                                </connections>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c7G-R3-Im1">
                                                 <nil key="textColor"/>
@@ -313,17 +317,23 @@
                     </view>
                     <connections>
                         <outlet property="TableView" destination="7GP-AB-JN2" id="HLa-W7-pEm"/>
+                        <outlet property="imgAdd" destination="nbw-iT-fwo" id="oc6-eX-giN"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signOUT" id="CDe-d7-jpW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YTg-iy-He9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="bdI-dF-tlR">
                     <connections>
-                        <action selector="signOutBtn:" destination="IWC-U2-afs" id="XuL-y3-qRQ"/>
+                        <action selector="signOutBtn:" destination="IWC-U2-afs" id="HvG-jZ-TNo"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="BsW-uR-iSJ">
+                    <connections>
+                        <action selector="addImageTapped:" destination="IWC-U2-afs" id="lyA-hV-8Xs"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="816.79999999999995" y="122.78860569715144"/>
+            <point key="canvasLocation" x="820" y="26"/>
         </scene>
     </scenes>
     <resources>
