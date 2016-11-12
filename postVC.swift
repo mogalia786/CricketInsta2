@@ -20,6 +20,11 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     //Create ImagePicker of type UIImagePickerController
     var imagePicker:UIImagePickerController!
+    
+    //Create Cache to store Image
+    static var imgCache:NSCache<NSString, UIImage>=NSCache()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,14 +77,22 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         //Create a cell making reference to the PostCell class that needs to be configured
         if let cell=tableView.dequeueReusableCell(withIdentifier: "PostCell")as? PostCell{
             //Configure the cell with the sing Post object from the array and display on TableCell
-            cell.configureCell(post: post)
+                            //CACHE CHECK!!!!!!! for image
+            if let img=postVC.imgCache.object(forKey: post.imageURL as NSString){
+                cell.configureCell(post: post, img: img)
+                return cell
+                //////////IF NO IMAGE
+            }else{
+                cell.configureCell(post: post)
             return cell
+            }
+            ////IF NO CELL
         }else{
             
             return PostCell()
         }
+    }
         
-           }
     //THIS Function is called to load the image to the Image View
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image=info[UIImagePickerControllerEditedImage] as? UIImage{
