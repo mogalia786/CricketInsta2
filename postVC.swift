@@ -16,6 +16,10 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
 
     @IBOutlet weak var imgAdd: CircleView!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var captionField: UITextField!
+    
+    var imageSelected = false
      var Posts=[Post]()
     
     //Create ImagePicker of type UIImagePickerController
@@ -97,6 +101,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image=info[UIImagePickerControllerEditedImage] as? UIImage{
             imgAdd.image=image
+            imageSelected=true
             }else
         {
             print("FAIZEL: Image was not correctly uploaded")        }
@@ -115,6 +120,52 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         let _=KeychainWrapper.standard.removeObject(forKey: KEY_UID)
         try! FIRAuth.auth()?.signOut()
         performSegue(withIdentifier: "signOUT", sender: self)
+    }
+    
+    
+    @IBAction func postBtnTapped(_ sender: AnyObject) {
+        guard let caption=captionField.text, caption != "" else{
+            return
+        }
+        guard let img=imgAdd.image, imageSelected==true else{
+            return
+        }
+        
+        if let imgData=UIImageJPEGRepresentation(img, 0.2){
+            let imgUID=NSUUID().uuidString
+            let METADATA=FIRStorageMetadata()
+            METADATA.contentType="image/jpeg"
+            DataService.ds.REF_POST_IMAGE.child(imgUID).put(imgData, metadata: METADATA) { (metadata, error) in
+                if error != nil {
+                    print("FAIZEL: Unable to upload post to Firebase - \(error)")
+                }else{
+                    print("FAIZEL: Post successfully posted to Firebase")
+                    let downloadURL=metadata?.downloadURL()?.absoluteString //THIS LINE PULLS OUT THE URL FROM THE METADATA
+                    if let url=downloadURL {
+                        self.postToFirebase(imgURL: url)
+                    }
+                    
+                }
+            }
+            }
+        
+    }
+    //////FUNCTION TO POST DATA TO FIREBASE
+    func postToFirebase(imgURL:String){
+        
+        let post:Dictionary<String, AnyObject> = [
+            "Caption": captionField.text! as AnyObject,
+            "imgURL": imgURL as AnyObject,
+            "likes": 0 as AnyObject
+            ]
+        
+        let firebasePost=DataService.ds.REF_POSTS.childByAutoId() //THIS LINE CREATES A NEW ID FOR THE POST
+        firebasePost.setValue(post) //THIS LINE CREATES A NEW POST WITH THE DICTIONARY SUPPLIED
+        captionField.text=""
+        imgAdd.image=UIImage(named: "add-image")
+        imageSelected=false
+        tableView.reloadData() //THIS LINE RELOADS THE DATA ON TABLE BY CALLING THE POSTCELL
+        
     }
     
     

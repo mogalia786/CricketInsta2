@@ -196,6 +196,9 @@
                                                     <constraint firstAttribute="width" constant="49" id="wMI-TR-Pbd"/>
                                                 </constraints>
                                                 <state key="normal" image="add-post"/>
+                                                <connections>
+                                                    <action selector="postBtnTapped:" destination="IWC-U2-afs" eventType="touchUpInside" id="t69-RY-RBj"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -317,6 +320,7 @@
                     </view>
                     <connections>
                         <outlet property="TableView" destination="7GP-AB-JN2" id="HLa-W7-pEm"/>
+                        <outlet property="captionField" destination="c7G-R3-Im1" id="xLm-Uj-NWz"/>
                         <outlet property="imgAdd" destination="nbw-iT-fwo" id="oc6-eX-giN"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signOUT" id="CDe-d7-jpW"/>
                     </connections>
