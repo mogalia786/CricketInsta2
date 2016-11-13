@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftKeychainWrapper
 
 ///This line makes reference to the URL of the database
 let DB_BASE=FIRDatabase.database().reference()
@@ -41,6 +42,13 @@ class DataService{
         
         return _REF_USERS
     }
+    var CURRENT_USER: FIRDatabaseReference{
+        let uid=KeychainWrapper.standard.string(forKey: KEY_UID)
+        let user=REF_USERS.child(uid!)
+        return user
+        
+    }
+    
     
     var REF_POST_IMAGE:FIRStorageReference{
     
