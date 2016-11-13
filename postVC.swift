@@ -46,6 +46,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         
         //This line is the OBSERVER that listens to Firebase for any changes and returns a snapshot
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
+            self.Posts=[] //CLEARS OUT POST ARRAY EACH TIME ITS OBSERVED THEREBY PREVENTING DUPLICATE POST
             //create a snapshot based on snapshot childrens all object from FIRdataSnapshot
             if let snapshot=snapshot.children.allObjects as? [FIRDataSnapshot]{
                 //Run through each snap in snapshot
@@ -84,12 +85,13 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                             //CACHE CHECK!!!!!!! for image
             if let img=postVC.imgCache.object(forKey: post.imageURL as NSString){
                 cell.configureCell(post: post, img: img)
-                return cell
+                //return cell
                 //////////IF NO IMAGE
             }else{
                 cell.configureCell(post: post)
-            return cell
+            //return cell
             }
+            return cell
             ////IF NO CELL
         }else{
             

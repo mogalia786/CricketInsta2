@@ -37,7 +37,7 @@ class PostCell: UITableViewCell {
     
     func configureCell(post:Post, img:UIImage? = nil){
         self.post=post
-        let likeRef=DataService.ds.CURRENT_USER.child("likes") //Sets LikeRef to be the child of the CURRENT USER Reference in database
+        likeRef=DataService.ds.CURRENT_USER.child("likes").child(post.postKey) //Sets LikeRef to be the child of the CURRENT USER Reference in database
         self.caption.text=post.caption
         self.likesLabel.text="\(post.likes)"
         
@@ -66,7 +66,7 @@ class PostCell: UITableViewCell {
             
         }
             //THESE LINES BASICALLY REACTS TO TAP AND CHANGES THE IMAGE FROM EMPTY TO FILLED HEART
-               likeRef.observe(.value, with: { (snapshot) in
+        likeRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
                 self.LikeImg.image=UIImage(named: "empty-heart")
             }else{
@@ -78,8 +78,8 @@ class PostCell: UITableViewCell {
     }
     
     //THIS FUNCTION BASICALLY REACTS TO TAP AND CHANGES THE IMAGE FROM EMPTY TO FILLED HEART
-    func likeTapped(){
-        likeRef.observe(.value, with: { (snapshot) in
+    func likeTapped(sender: UITapGestureRecognizer){ //MAKE SURE TO ADD THE SENDER AS A PARAMETER)
+        likeRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
                 self.LikeImg.image=UIImage(named: "filled-heart")
                 self.post.adjustLikes(addLikes: true) //THIS LINE BASICALLY INCREASES THE LIKES VALUE FOR THIS POST
