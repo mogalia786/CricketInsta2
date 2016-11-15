@@ -12,6 +12,7 @@ import Firebase
 class Post{
     
     private var _caption: String!
+    private var _username: String!
     private var _imageURL: String!
     private var _likes: Int!
     private var _postKey: String!
@@ -33,7 +34,9 @@ class Post{
         return _postKey
     }
     
- 
+    var Username:String{
+        return _username
+    }
 
     init(caption: String, imageURL:String, likes: Int){
         self._caption=caption
@@ -55,6 +58,10 @@ class Post{
         
         if let likes=userData["likes"] as? Int{
             self._likes=likes
+        }
+        
+        if let Username=userData["Username"] as? String{
+            self._username=Username
         }
         _postRef=DataService.ds.REF_POSTS.child(_postKey) //THIS LINE CREATES A DATABASE REFERENCE TO THE POSTKEY FOR SELECTED POST
         

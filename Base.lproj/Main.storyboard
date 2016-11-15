@@ -32,7 +32,7 @@
                                     <constraint firstAttribute="trailing" secondItem="dqq-YA-Idp" secondAttribute="trailing" constant="8" id="7Sy-nh-fap"/>
                                     <constraint firstAttribute="height" constant="120" id="ZIU-az-8KA"/>
                                     <constraint firstItem="dqq-YA-Idp" firstAttribute="leading" secondItem="jNi-A6-DU8" secondAttribute="leading" constant="8" id="pNV-ZQ-eit"/>
-                                    <constraint firstItem="dqq-YA-Idp" firstAttribute="top" secondItem="jNi-A6-DU8" secondAttribute="top" constant="10" id="vWq-Ez-Fag"/>
+                                    <constraint firstItem="dqq-YA-Idp" firstAttribute="top" secondItem="jNi-A6-DU8" secondAttribute="top" constant="30" id="vWq-Ez-Fag"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eU0-AE-LSn" customClass="RoundedView" customModule="CricketInsta" customModuleProvider="target">
@@ -70,7 +70,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="emailSignInTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zNA-jE-PUU"/>
+                                    <action selector="emailSignInTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SoQ-wE-BLq"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zHw-nj-p4P">
@@ -152,15 +152,23 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="GlW-o6-M7v" customClass="CircleView" customModule="CricketInsta" customModuleProvider="target">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9R6-s5-dsp"/>
+                                            <constraint firstAttribute="width" constant="40" id="sWu-XS-0x4"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.17254901959999999" green="0.58431372550000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="21C-hc-5T9" firstAttribute="centerY" secondItem="NnI-E3-4e6" secondAttribute="centerY" id="5ty-Db-OEh"/>
+                                    <constraint firstAttribute="bottom" secondItem="GlW-o6-M7v" secondAttribute="bottom" constant="8" id="PHA-4J-YX2"/>
                                     <constraint firstItem="NnI-E3-4e6" firstAttribute="leading" secondItem="1sL-xu-qgT" secondAttribute="leading" constant="16" id="fNP-zm-HlJ"/>
                                     <constraint firstItem="NnI-E3-4e6" firstAttribute="top" secondItem="1sL-xu-qgT" secondAttribute="top" constant="20" id="fnc-lH-fvl"/>
                                     <constraint firstAttribute="height" constant="65" id="iYQ-2q-PLM"/>
                                     <constraint firstItem="21C-hc-5T9" firstAttribute="centerX" secondItem="1sL-xu-qgT" secondAttribute="centerX" id="l8b-qA-PSg"/>
+                                    <constraint firstAttribute="trailing" secondItem="GlW-o6-M7v" secondAttribute="trailing" constant="8" id="m8B-ob-uwb"/>
                                 </constraints>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="bdI-dF-tlR" appends="YES" id="YW9-7i-ZvN"/>
@@ -320,6 +328,7 @@
                         <outlet property="TableView" destination="7GP-AB-JN2" id="HLa-W7-pEm"/>
                         <outlet property="captionField" destination="c7G-R3-Im1" id="xLm-Uj-NWz"/>
                         <outlet property="imgAdd" destination="nbw-iT-fwo" id="oc6-eX-giN"/>
+                        <outlet property="profileIMG" destination="GlW-o6-M7v" id="cTp-d8-SQR"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signOUT" id="CDe-d7-jpW"/>
                     </connections>
                 </viewController>

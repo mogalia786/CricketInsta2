@@ -10,12 +10,13 @@ import UIKit
 import SwiftKeychainWrapper
 import Firebase
 
-
+var url:String!
 
 class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imgAdd: CircleView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var profileIMG: CircleView!
     
     @IBOutlet weak var captionField: UITextField!
     
@@ -43,7 +44,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker.allowsEditing=true
         imagePicker.delegate=self
         //////////////////////////////////////////////////////////////////////////////////////////
-        
+        //DataService.ds.REF_PROFILE.child("Username")
         //This line is the OBSERVER that listens to Firebase for any changes and returns a snapshot
         DataService.ds.REF_POSTS.observe(.value, with: { (snapshot) in
             self.Posts=[] //CLEARS OUT POST ARRAY EACH TIME ITS OBSERVED THEREBY PREVENTING DUPLICATE POST
@@ -103,6 +104,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image=info[UIImagePickerControllerEditedImage] as? UIImage{
             imgAdd.image=image
+            profileIMG.image=image
             imageSelected=true
             }else
         {
@@ -132,7 +134,10 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         guard let img=imgAdd.image, imageSelected==true else{
             return
         }
-        
+        guard let imgP=profileIMG.image, imageSelected==true else{
+            return
+        }
+
         if let imgData=UIImageJPEGRepresentation(img, 0.2){
             let imgUID=NSUUID().uuidString
             let METADATA=FIRStorageMetadata()
@@ -144,21 +149,31 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
                     print("FAIZEL: Post successfully posted to Firebase")
                     let downloadURL=metadata?.downloadURL()?.absoluteString //THIS LINE PULLS OUT THE URL FROM THE METADATA
                     if let url=downloadURL {
-                        self.postToFirebase(imgURL: url)
-                    }
-                    
-                }
-            }
-            }
-        
+                        if let imgData=UIImageJPEGRepresentation(imgP, 0.2){
+                            let imgUID=NSUUID().uuidString
+                            let METADATA=FIRStorageMetadata()
+                            METADATA.contentType="image/jpeg"
+                            DataService.ds.REF_PROFILE_IMAGE.child(imgUID).put(imgData, metadata: METADATA) { (metadata, error) in
+                                if error != nil {
+                                    print("FAIZEL: Unable to upload post to Firebase - \(error)")
+                                }else{
+                                    self.postToFirebase(imgURL: url, imgURL_Profile: url)
+                                }
+                                self.view.endEditing(true)}
+                        }
+
+                        } }
+        }}
     }
     //////FUNCTION TO POST DATA TO FIREBASE
-    func postToFirebase(imgURL:String){
+    func postToFirebase(imgURL:String, imgURL_Profile:String){
         
         let post:Dictionary<String, AnyObject> = [
             "Caption": captionField.text! as AnyObject,
             "imgURL": imgURL as AnyObject,
-            "likes": 0 as AnyObject
+            "imgProfile":imgURL_Profile as AnyObject,
+            "likes": 0 as AnyObject,
+            "Username": KeychainWrapper.standard.string(forKey: EMAIL)! as String as AnyObject
             ]
         
         let firebasePost=DataService.ds.REF_POSTS.childByAutoId() //THIS LINE CREATES A NEW ID FOR THE POST

@@ -17,6 +17,8 @@ class LoginVC: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     
     @IBOutlet weak var pwdField: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +26,7 @@ class LoginVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         if let _=KeychainWrapper.standard.string(forKey: KEY_UID){
-            
+  
             performSegue(withIdentifier: "ShowPostVC", sender: nil)
         }
     }
@@ -60,7 +62,7 @@ class LoginVC: UIViewController {
             }else{
                 if let user=user{
                     let userData=["Provider":credential.provider]
-                    self.completeSignIn(id: user.uid, userData: userData)
+                    self.completeSignIn(email: user.email!, id: user.uid, userData: userData)
                                     }
                 print("FAIZEL: Firebase authenticate successfully!")
             }
@@ -77,7 +79,7 @@ class LoginVC: UIViewController {
             FIRAuth.auth()?.signIn(withEmail: email, password: pwd, completion: { (user, error) in
                 if error == nil{
                     let userData=["provider":user?.providerID]
-                    self.completeSignIn(id: (user?.uid)!,userData: (userData as! Dictionary<String, String>))
+                    self.completeSignIn(email: email, id: (user?.uid)!,userData: (userData as! Dictionary<String, String>))
                     print("FAIZEL: Email User authenticated with Firebase")
                 
                 }else{
@@ -89,7 +91,7 @@ class LoginVC: UIViewController {
                             self.present(alert, animated: true, completion: nil)
                         }else{
                             let userData=["provider":user?.providerID]
-                            self.completeSignIn(id: (user?.uid)!,userData: userData as! Dictionary<String, String>)
+                            self.completeSignIn(email: email, id: (user?.uid)!,userData: userData as! Dictionary<String, String>)
                             print("FAIZEL: Email User successfully created and athenticated with Firebase")
                             
                         }
@@ -99,10 +101,12 @@ class LoginVC: UIViewController {
         }
     }
     
-    func completeSignIn(id: String, userData:Dictionary<String,String>){
+    func completeSignIn(email: String, id: String, userData:Dictionary<String,String>){
         DataService.ds.createFIRDBuser(uid: id, userData: userData)
         KeychainWrapper.standard.set(id, forKey: KEY_UID)
+        KeychainWrapper.standard.set(email, forKey: EMAIL)
         performSegue(withIdentifier: "ShowPostVC", sender: nil)
+        
  
     }
     

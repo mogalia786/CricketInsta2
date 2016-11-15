@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseStorage
+import SwiftKeychainWrapper
 class PostCell: UITableViewCell {
    
     @IBOutlet weak var username:UILabel!
@@ -35,11 +36,12 @@ class PostCell: UITableViewCell {
     
     }
     
-    func configureCell(post:Post, img:UIImage? = nil){
+    func configureCell(post:Post, img:UIImage? = nil, Pimg:UIImage? = nil){
         self.post=post
         likeRef=DataService.ds.CURRENT_USER.child("likes").child(post.postKey) //Sets LikeRef to be the child of the CURRENT USER Reference in database
         self.caption.text=post.caption
         self.likesLabel.text="\(post.likes)"
+        self.username.text=post.Username
         
         //SET IMAGE OR DOWNLOAD URL
         if img != nil{
@@ -65,6 +67,32 @@ class PostCell: UITableViewCell {
        
             
         }
+        
+        
+        if Pimg != nil{
+            self.pfIMG.image=Pimg}
+        else{
+            let ref=FIRStorage.storage().reference(forURL: post.imageURL)
+            ref.data(withMaxSize: 2 * 1024 * 1024, completion: {(data,error) in
+                if error != nil{
+                    print("FAIZEL: Unable to download image from Firebase Storage - \(error)")
+                }
+                else{
+                    print("FAIZEL: Downloaded Image")
+                    if let imgdata=data{  //if no error and image data exist
+                        if let Pimg=UIImage(data: imgdata){ //creates image from data
+                            self.pfIMG.image=Pimg  //set the image
+                            postVC.imgCache.setObject(Pimg, forKey: post.imageURL as NSString) //adds image to the cache
+                        }
+                    }
+                }
+            })
+            
+            
+            
+            
+        }
+
             //THESE LINES BASICALLY REACTS TO TAP AND CHANGES THE IMAGE FROM EMPTY TO FILLED HEART
         likeRef.observeSingleEvent(of: .value, with: { (snapshot) in
             if let _ = snapshot.value as? NSNull {
