@@ -69,29 +69,29 @@ class PostCell: UITableViewCell {
         }
         
         
-        if Pimg != nil{
-            self.pfIMG.image=Pimg}
-        else{
-            let ref=FIRStorage.storage().reference(forURL: post.imageURL)
-            ref.data(withMaxSize: 2 * 1024 * 1024, completion: {(data,error) in
-                if error != nil{
-                    print("FAIZEL: Unable to download image from Firebase Storage - \(error)")
-                }
-                else{
-                    print("FAIZEL: Downloaded Image")
-                    if let imgdata=data{  //if no error and image data exist
-                        if let Pimg=UIImage(data: imgdata){ //creates image from data
-                            self.pfIMG.image=Pimg  //set the image
-                            postVC.imgCache.setObject(Pimg, forKey: post.imageURL as NSString) //adds image to the cache
-                        }
-                    }
-                }
-            })
-            
-            
-            
-            
-        }
+//        if Pimg != nil{
+//            self.pfIMG.image=Pimg}
+//        else{
+//            let ref=FIRStorage.storage().reference(forURL: post.imageURLprofile)
+//            ref.data(withMaxSize: 2 * 1024 * 1024, completion: {(data,error) in
+//                if error != nil{
+//                    print("FAIZEL: Unable to download image from Firebase Storage - \(error)")
+//                }
+//                else{
+//                    print("FAIZEL: Downloaded Image profile image on post cell")
+//                    if let imgdata=data{  //if no error and image data exist
+//                        if let Pimg=UIImage(data: imgdata){ //creates image from data
+//                            self.pfIMG.image=Pimg  //set the image
+//                            postVC.imgCache.setObject(Pimg, forKey: post.imageURLprofile as NSString) //adds image to the cache
+//                        }
+//                    }
+//                }
+//            })
+//            
+//            
+//            
+//            
+//        }
 
             //THESE LINES BASICALLY REACTS TO TAP AND CHANGES THE IMAGE FROM EMPTY TO FILLED HEART
         likeRef.observeSingleEvent(of: .value, with: { (snapshot) in

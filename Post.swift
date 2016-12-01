@@ -14,6 +14,7 @@ class Post{
     private var _caption: String!
     private var _username: String!
     private var _imageURL: String!
+    private var _imageURLprofile: String!
     private var _likes: Int!
     private var _postKey: String!
     private var _postRef: FIRDatabaseReference! //THIS LINE SETS A REFERENCE TO DATABASE REFERENCE TO BE USED BELOW
@@ -25,6 +26,13 @@ class Post{
     var imageURL:String{
         return _imageURL
     }
+    var imageURLprofile:String{
+        if let _ = _imageURLprofile {
+        return _imageURLprofile
+        }
+        return ""
+    }
+
     
     var likes: Int{
         return _likes
@@ -35,7 +43,11 @@ class Post{
     }
     
     var Username:String{
+        if let _ = _username{
         return _username
+        }else{
+            return ""
+        }
     }
 
     init(caption: String, imageURL:String, likes: Int){
@@ -55,6 +67,10 @@ class Post{
         if let imageURL=userData["imgURL"] as? String{
             self._imageURL=imageURL
         }
+        if (userData["imgProfile"] as? String) != nil{
+            self._imageURLprofile=imageURLprofile
+        }
+
         
         if let likes=userData["likes"] as? Int{
             self._likes=likes

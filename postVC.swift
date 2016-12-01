@@ -25,10 +25,11 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     
     //Create ImagePicker of type UIImagePickerController
     var imagePicker:UIImagePickerController!
-    
+    var imagePickerP:UIImagePickerController!
+
     //Create Cache to store Image
     static var imgCache:NSCache<NSString, UIImage>=NSCache()
-    
+    static var imgCacheP:NSCache<NSString, UIImage>=NSCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,10 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
         imagePicker=UIImagePickerController()
         imagePicker.allowsEditing=true
         imagePicker.delegate=self
+        imagePickerP=UIImagePickerController()
+        imagePickerP.allowsEditing=true
+        imagePickerP.delegate=self
+
         //////////////////////////////////////////////////////////////////////////////////////////
         //DataService.ds.REF_PROFILE.child("Username")
         //This line is the OBSERVER that listens to Firebase for any changes and returns a snapshot
@@ -85,7 +90,10 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
             //Configure the cell with the sing Post object from the array and display on TableCell
                             //CACHE CHECK!!!!!!! for image
             if let img=postVC.imgCache.object(forKey: post.imageURL as NSString){
-                cell.configureCell(post: post, img: img)
+                if let imgP=postVC.imgCache.object(forKey: post.imageURLprofile as NSString){
+                    cell.configureCell(post: post, img: img, Pimg: imgP)
+                }
+                
                 //return cell
                 //////////IF NO IMAGE
             }else{
@@ -104,7 +112,7 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image=info[UIImagePickerControllerEditedImage] as? UIImage{
             imgAdd.image=image
-            profileIMG.image=image
+            //profileIMG.image=image
             imageSelected=true
             }else
         {
@@ -113,11 +121,15 @@ class postVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIIm
     }
     
     ///////////////////////////////////////////////////////////////////////////
+   // @IBAction func addProfileTapped(_ sender: AnyObject) {
+     //   present(imagePickerP, animated: true, completion: nil)
+    //}
     
     @IBAction func addImageTapped(_ sender: AnyObject) {
         //dont forget to set info.plist Privacy Photo Library Usage and description
       present(imagePicker, animated: true, completion: nil)
     }
+    
     
     
     @IBAction func signOutBtn(_ sender: AnyObject) {

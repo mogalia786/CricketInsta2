@@ -153,10 +153,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="GlW-o6-M7v" customClass="CircleView" customModule="CricketInsta" customModuleProvider="target">
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="9R6-s5-dsp"/>
                                             <constraint firstAttribute="width" constant="40" id="sWu-XS-0x4"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="QwI-xv-YJI" appends="YES" id="XJL-Zo-oP1"/>
+                                        </connections>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.17254901959999999" green="0.58431372550000005" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -343,6 +347,7 @@
                         <action selector="addImageTapped:" destination="IWC-U2-afs" id="lyA-hV-8Xs"/>
                     </connections>
                 </tapGestureRecognizer>
+                <tapGestureRecognizer id="QwI-xv-YJI"/>
             </objects>
             <point key="canvasLocation" x="820" y="26"/>
         </scene>
